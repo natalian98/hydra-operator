@@ -1,0 +1,3 @@
+run-migration:
+  description: Run a command to create SQL schemas and apply migration plans.
+
