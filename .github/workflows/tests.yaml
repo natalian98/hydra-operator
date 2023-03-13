@@ -11,11 +11,14 @@ jobs:
         with:
           provider: microk8s
       - name: Export microk8s config
-        run: microk8s config > ~/.kube/config
+        run: snap_microk8s microk8s config > ~/.kube/config
       - name: Deploy a charm
         run: juju deploy hello-kubecon
       - name: Fail
         run: "false"
+      - name: Get groups
+        run: groups
+        if: failure()
       - name: Check config view
         run: kubectl config view
         if: failure()
