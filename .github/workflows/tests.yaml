@@ -14,6 +14,8 @@ jobs:
         run: juju deploy hello-kubecon
       - name: Fail
         run: "false"
+      - name: Check config view
+        run: kubectl config view
       - name: Dump logs
         uses: canonical/charm-logdump-action@HEAD
         if: failure()
