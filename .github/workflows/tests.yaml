@@ -10,12 +10,15 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
+      - name: Export microk8s config
+        run: microk8s config > ~/.kube/config
       - name: Deploy a charm
         run: juju deploy hello-kubecon
       - name: Fail
         run: "false"
       - name: Check config view
         run: kubectl config view
+        if: failure()
       - name: Dump logs
         uses: canonical/charm-logdump-action@HEAD
         if: failure()
