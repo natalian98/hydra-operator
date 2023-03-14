@@ -14,8 +14,9 @@ jobs:
       - name: Export microk8s config
         run: |
           mkdir -p ~/.kube
+          sudo usermod -a -G snap_microk8s runner
+          sudo chown -f -R runner ~/.kube
           newgrp snap_microk8s
-          sudo usermod -a -G snap_microk8s $USER
           sg snap_microk8s -c microk8s config > ~/.kube/config
       - name: Deploy a charm
         run: juju deploy hello-kubecon
