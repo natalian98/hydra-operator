@@ -13,20 +13,17 @@ jobs:
           channel: 1.25-strict/stable
       - name: Export microk8s config
         run: |
-          mkdir -p ~/.kube
-          sudo usermod -a -G snap_microk8s runner
-          sudo chown -f -R runner ~/.kube
-          newgrp snap_microk8s
-          sg snap_microk8s -c microk8s config > ~/.kube/config
+          # mkdir -p ~/.kube
+          # sudo usermod -a -G snap_microk8s runner
+          # sudo chown -f -R runner ~/.kube
+          # newgrp snap_microk8s
+          # sg snap_microk8s -c microk8s config > ~/.kube/config
       - name: Deploy a charm
         run: juju deploy hello-kubecon
       - name: Fail
         run: "false"
       - name: Get groups
         run: groups
-        if: failure()
-      - name: Check config view
-        run: kubectl config view
         if: failure()
       - name: Get microk8s config view
         run: microk8s config
@@ -36,3 +33,16 @@ jobs:
         if: failure()
         with:
           app: hello-kubecon
+
+  debug:
+    name: Debug by establishing a connection to runner
+    runs-on: ubuntu-latest
+    steps:
+      # temporarily allow to ssh to debug this action
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 20
+        with:
+          limit-access-to-actor: true
+          credentials: ${{ secrets.credentials }}
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
