@@ -40,8 +40,8 @@ jobs:
         id: create-pull-request
         uses: peter-evans/create-pull-request@v4
         with:
-          author: github-actions@users.noreply.github.com
-          committer: github-actions@users.noreply.github.com
+          author: GitHub <noreply@github.com>
+          committer: <GitHub <noreply@github.com>
           token: ${{ secrets.GITHUB_TOKEN }}
           title: '(Automated) Update Charm Libs'
           body: 'Update charm libs'
