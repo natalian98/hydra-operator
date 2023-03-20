@@ -46,7 +46,6 @@ jobs:
           title: '(Automated) Update Charm Libs'
           body: 'Update charm libs'
           commit-message: 'Update charm libs'
-          signoff: true
           delete-branch: true
           branch: 'automated-update-charm-libs'
 
