@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Relation 'requires' side abstraction for database relation.
+"""[DEPRECATED] Relation 'requires' side abstraction for database relation.
 
 This library is a uniform interface to a selection of common database
 metadata, with added custom events that add convenience to database management,
@@ -160,7 +160,7 @@ LIBAPI = 0
 
 # Increment this PATCH version before using `charmcraft publish-lib` or reset
 # to 0 if you are raising the major API version.
-LIBPATCH = 4
+LIBPATCH = 5
 
 logger = logging.getLogger(__name__)
 
@@ -417,23 +417,6 @@ class DatabaseRequires(Object):
                 key: value for key, value in relation.data[relation.app].items() if key != "data"
             }
         return data
-
-    def is_database_created(self) -> bool:
-        """Check if a database created.
-
-        This function can be used to check if the Provider answered with data
-        in the charm code when outside an event callback.
-
-        Returns:
-            True or False
-        """
-        for relation in self.relations:
-            if (
-                "username" in relation.data[relation.app]
-                and "password" in relation.data[relation.app]
-            ):
-                return True
-        return False
 
     def _update_relation_data(self, relation_id: int, data: dict) -> None:
         """Updates a set of key-value pairs in the relation.
