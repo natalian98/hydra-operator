@@ -1,0 +1,20 @@
+# Test push on path - check if action is triggered
+name: Test push on path
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/on_schedule.yaml"
+
+jobs:
+  publish-lib:
+    name: Test push on path
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install charmcraft
+        run: sudo snap install charmcraft --channel latest/stable --classic
