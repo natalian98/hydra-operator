@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/on_schedule.yaml"
+      - "lib/charms/hydra/**"
 
 jobs:
   publish-lib:
