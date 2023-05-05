@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '34 15 * * MON'
+    - cron: '43 09 * * FRI'
 
 jobs:
   update-charm-libs:
@@ -8,3 +8,15 @@ jobs:
     uses: ./.github/workflows/update_libs.yaml
     secrets:
       CHARMCRAFT_CREDENTIALS: ${{ secrets.CHARMCRAFT_CREDENTIALS }}
+  upload-artifacts:
+    name: upload-artifacts
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Save juju logs
+        run: |
+          echo "test" > ~/juju-logs.txt
+      - name: Upload juju logs as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: upload-juju-logs
+          path: ~/juju-logs.txt
