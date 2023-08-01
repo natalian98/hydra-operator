@@ -46,4 +46,5 @@ jobs:
           branch-name: 'automated-update-charm-libs-test'
           title: Test pull request
           body: Test pull request body
+          upsert: true
           ignore-no-changes: true
