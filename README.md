@@ -2,6 +2,8 @@
 
 ## Description
 
+**This repository is used for testing**
+
 This repository hosts the Kubernetes Python Operator for Ory Hydra - a scalable, security first OAuth 2.0 and OpenID Connect server.
 
 For more details and documentation, visit https://www.ory.sh/docs/hydra/
