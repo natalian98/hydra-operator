@@ -39,7 +39,7 @@ jobs:
           CHARMCRAFT_AUTH: ${{ secrets.CHARMCRAFT_CREDENTIALS }}
 
       - name: Create Pull Request
-        # permissions: write-all
+        permissions: write-all
         id: create-pull-request
         uses: canonical/create-pull-request@main
         with:
