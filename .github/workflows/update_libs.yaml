@@ -26,6 +26,7 @@ jobs:
   update-libs:
     name: Update charm libraries
     runs-on: ubuntu-22.04
+    permissions: write-all
     steps:
       - uses: actions/checkout@v3
         with:
@@ -39,7 +40,6 @@ jobs:
           CHARMCRAFT_AUTH: ${{ secrets.CHARMCRAFT_CREDENTIALS }}
 
       - name: Create Pull Request
-        permissions: write-all
         id: create-pull-request
         uses: canonical/create-pull-request@main
         with:
