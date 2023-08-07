@@ -43,7 +43,7 @@ jobs:
         id: create-pull-request
         uses: canonical/create-pull-request@main
         with:
-          github-token: ${{ secrets.PAT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Test commit message
           branch-name: 'automated-update-charm-libs-test'
           title: Test pull request
