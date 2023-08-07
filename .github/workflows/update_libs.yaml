@@ -12,6 +12,8 @@ on:
     secrets:
       CHARMCRAFT_CREDENTIALS:
         required: true
+      PAT_TOKEN:
+        required: true
   workflow_dispatch:
     inputs:
       charmcraft_channel:
@@ -41,7 +43,7 @@ jobs:
         id: create-pull-request
         uses: canonical/create-pull-request@main
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAT_TOKEN }}
           commit-message: Test commit message
           branch-name: 'automated-update-charm-libs-test'
           title: Test pull request
