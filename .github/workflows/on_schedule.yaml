@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '31 13 * * MON'
+    - cron: '50 13 * * MON'
 
 jobs:
   update-charm-libs:
