@@ -23,20 +23,27 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ inputs.source_branch }}
+
+      - name: Setup lxd
+        uses: canonical/setup-lxd@v0.1.2
+        with:
+           channel: latest/stable
           
-      # Required to charmcraft pack in non-destructive mode
-      - name: Install and initialize lxd
-        id: install-lxd
-        run: |
-          /usr/bin/sudo snap install core
-          /usr/bin/sudo snap install lxd --channel=latest/stable
-          /usr/bin/sudo lxd waitready
-          /usr/bin/sudo lxd init --auto
-          # /usr/bin/sudo chmod a+wr /var/snap/lxd/common/lxd/unix.socket
-          # /snap/bin/lxc network set lxdbr0 ipv6.address none
-          # /usr/bin/sudo usermod -a -G lxd runner
-          /usr/bin/sudo iptables -F FORWARD
-          /usr/bin/sudo iptables -P FORWARD ACCEPT
+      # # Required to charmcraft pack in non-destructive mode
+      # - name: Install and initialize lxd
+      #   id: install-lxd
+      #   run: |
+      #     /usr/bin/sudo snap install core
+      #     /usr/bin/sudo snap install lxd --channel=latest/stable
+      #     /usr/bin/sudo lxd waitready
+      #     /usr/bin/sudo lxd init --auto
+      #     # /usr/bin/sudo chmod a+wr /var/snap/lxd/common/lxd/unix.socket
+      #     # /snap/bin/lxc network set lxdbr0 ipv6.address none
+      #     # /usr/bin/sudo usermod -a -G lxd runner
+      #     /usr/bin/sudo iptables -F FORWARD
+      #     /usr/bin/sudo iptables -P FORWARD ACCEPT
+      
+      # Dry run, without publishing
       - name: Charmcraft pack
         id: pack
         run: |
