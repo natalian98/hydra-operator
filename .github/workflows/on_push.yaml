@@ -35,7 +35,8 @@ jobs:
           /usr/bin/sudo chmod a+wr /var/snap/lxd/common/lxd/unix.socket
           /snap/bin/lxc network set lxdbr0 ipv6.address none
           /usr/bin/sudo usermod -a -G lxd runner
-          
+          /usr/bin/sudo iptables -F FORWARD
+          /usr/bin/sudo iptables -P FORWARD ACCEPT
       - name: Charmcraft pack
         id: pack
         run: |
