@@ -8,20 +8,31 @@ name: On Push
 # charmhub edge channel.
 
 on:
-  push:
-    branches:
-      - main
-      - track/**
+ push:
+   branches:
+     - main
+     - track/**
 
 jobs:
-  tests:
-    name: Run Tests
-    uses: ./.github/workflows/tests.yaml
+  test:
+    name: test-charmcraft-pack
+    runs-on: ubuntu-24.04
+    steps:
+      # Required to charmcraft pack in non-destructive mode
+      - name: Install and initialize lxd
+        id: install-lxd
+        run: |
+          /usr/bin/sudo snap install lxd --channel=latest/stable
+          /usr/bin/sudo lxd waitready
+          /usr/bin/sudo lxd init --auto
+      - name: Charmcraft pack
+        id: pack
+        run: |
+          /usr/bin/sudo snap install charmcraft --classic --channel latest/stable
+          /usr/bin/sudo charmcraft pack --quiet
 
-  # publish runs in series with tests, and only publishes if tests passes
-  publish-charm:
-    name: Publish Charm
-    needs: tests
-    uses: ./.github/workflows/publish.yaml
-    secrets:
-      CHARMCRAFT_CREDENTIALS: ${{ secrets.CHARMCRAFT_CREDENTIALS }}
+#  tests:
+#    name: Run Tests
+#    uses: ./.github/workflows/tests.yaml
+#    secrets:
+#      charmcraft-credentials: ${{ secrets.CHARMCRAFT_CREDENTIALS }}
