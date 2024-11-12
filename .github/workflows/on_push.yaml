@@ -18,6 +18,12 @@ jobs:
     name: test-charmcraft-pack
     runs-on: ubuntu-24.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.source_branch }}
+          
       # Required to charmcraft pack in non-destructive mode
       - name: Install and initialize lxd
         id: install-lxd
@@ -25,6 +31,7 @@ jobs:
           /usr/bin/sudo snap install lxd --channel=latest/stable
           /usr/bin/sudo lxd waitready
           /usr/bin/sudo lxd init --auto
+          
       - name: Charmcraft pack
         id: pack
         run: |
