@@ -28,6 +28,7 @@ jobs:
       - name: Install and initialize lxd
         id: install-lxd
         run: |
+          /usr/bin/sudo snap install core
           /usr/bin/sudo snap install lxd --channel=latest/stable
           /usr/bin/sudo lxd waitready
           /usr/bin/sudo lxd init --auto
