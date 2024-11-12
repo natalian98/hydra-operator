@@ -34,6 +34,7 @@ jobs:
           /usr/bin/sudo lxd init --auto
           /usr/bin/sudo chmod a+wr /var/snap/lxd/common/lxd/unix.socket
           /snap/bin/lxc network set lxdbr0 ipv6.address none
+          /usr/bin/sudo usermod -a -G lxd runner
           
       - name: Charmcraft pack
         id: pack
