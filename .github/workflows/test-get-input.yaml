@@ -1,0 +1,21 @@
+name: Test workflow inputs conditions
+
+on:
+  workflow_call:
+    inputs:
+      charm_name:
+        description: Name of the charmed application the tests are running for
+        required: false
+        type: string
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get inputs
+        if: ${{ inputs.charm_name }}
+        run: echo ${{ inputs.charm_name }}
