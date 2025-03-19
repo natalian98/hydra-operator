@@ -10,5 +10,5 @@ jobs:
   tests:
     name: Test callable workflow
     uses: ./.github/workflows/test-get-input.yaml
-    with:
-      charm_name: "test-operator"
+    # with:
+    #   charm_name: "test-operator"
