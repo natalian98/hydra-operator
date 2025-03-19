@@ -1,0 +1,13 @@
+name: test
+
+on:
+   push:
+     branches:
+     - "main"
+
+jobs:
+  tests:
+    name: Test callable workflow
+    uses: ./.github/workflows/test-get-input.yaml
+    with:
+      charm_name: "test-operator"
