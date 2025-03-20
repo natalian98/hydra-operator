@@ -7,11 +7,30 @@ on:
         description: Name of the charmed application the tests are running for
         required: false
         type: string
+      charmcraft-channel:
+        description: Snap channel for charmcraft
+        required: false
+        default: latest/stable
+        type: string
+    outputs:
+      name:
+        description: The charm name
+        value: ${{ jobs.build.outputs.name }}
+      platforms:
+        description: The platforms for which the charm has been built
+        value: ${{ jobs.build.outputs.platforms }}
+      charm-paths:
+        description: The paths to all the charms built
+        value: ${{ jobs.build.outputs.paths }}
 
 jobs:
   test:
     name: Test
     runs-on: ubuntu-22.04
+    outputs:
+      name: ${{ steps.get-charm-info.outputs.charm-name }}
+      platforms: ${{ steps.get-charm-info.outputs.charm-platforms }}
+      paths: ${{ steps.get-charm-paths.outputs.charm-paths }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,3 +63,14 @@ jobs:
 
       - name: Get build path
         run: ls -la $GITHUB_WORKSPACE | grep charm
+
+      - name: Get charm info
+        id: get-charm-info
+        run: |
+          echo charm-name=$(cat charmcraft.yaml | yq '.name') >> $GITHUB_OUTPUT
+          echo charm-platforms=$(cat charmcraft.yaml | yq '.platforms | keys | tojson') >> $GITHUB_OUTPUT
+
+      - name: Get charm paths
+        id: get-charm-paths
+        run: |
+          echo charm-paths=$(echo '${{ steps.get-charm-info.outputs.charm-platforms }}' | jq -r --arg charm ${{ steps.get-charm-info.outputs.charm-name }} '.[] |= split(":") | .[] |= join("-", .) | map($charm + "_" + . + ".charm") | join(",")') >> $GITHUB_OUTPUT
