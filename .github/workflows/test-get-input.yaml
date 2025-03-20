@@ -91,6 +91,6 @@ jobs:
     steps:
       - name: Set CHARM_PATH envvar
         run: |
-          echo CHARM_PATH=${{ needs.test.outputs.paths }} >> $GITHUB_ENV
+          echo "CHARM_PATH=${{ github.workspace }}/${{ needs.test.outputs.paths }}" >> $GITHUB_ENV
           echo ${{ env.CHARM_PATH }}
           echo $GITHUB_ENV
