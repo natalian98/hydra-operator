@@ -67,9 +67,6 @@ jobs:
       - name: Build charm
         run: ${{ env.CHARMCRAFT_BIN}} pack -v
 
-      - name: Get build path
-        run: ls -la $GITHUB_WORKSPACE | grep charm
-
       - name: Get charm info
         id: get-charm-info
         run: |
@@ -80,3 +77,8 @@ jobs:
         id: get-charm-paths
         run: |
           echo charm-paths=$(echo '${{ steps.get-charm-info.outputs.charm-platforms }}' | jq -r --arg charm ${{ steps.get-charm-info.outputs.charm-name }} '.[] |= split(":") | .[] |= join("-", .) | map($charm + "_" + . + ".charm") | join(",")') >> $GITHUB_OUTPUT
+
+      - name: Get build path
+        run: |
+          echo $GITHUB_OUTPUT
+          ls -la $GITHUB_WORKSPACE | grep charm
