@@ -22,3 +22,25 @@ jobs:
       - name: Get inputs
         if: ${{ inputs.charm_name }}
         run: echo ${{ inputs.charm_name }}
+
+      - name: Setup lxd
+        uses: canonical/setup-lxd@v0.1.2
+        with:
+          channel: latest/stable
+
+      - name: Install charmcraft
+        run: |
+          sudo snap install charmcraft --classic --channel ${{ inputs.charmcraft-channel }}
+          echo CHARMCRAFT_BIN=charmcraft >> $GITHUB_ENV
+
+      - name: Install charmcraftcache
+        if: ${{ inputs.use-charmcraftcache }}
+        run: |
+          pipx install charmcraftcache
+          echo CHARMCRAFT_BIN=ccc >> $GITHUB_ENV
+
+      - name: Build charm
+        run: ${{ env.CHARMCRAFT_BIN}} pack -v
+
+      - name: Get build path
+        run: ls -la $GITHUB_WORKSPACE | grep charm
