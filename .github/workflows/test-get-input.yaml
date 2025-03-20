@@ -12,6 +12,12 @@ on:
         required: false
         default: latest/stable
         type: string
+      use-charmcraftcache:
+        description: Enable usage of charmcraftcache
+        required: false
+        default: false
+        type: boolean
+      
     outputs:
       name:
         description: The charm name
