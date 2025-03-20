@@ -78,12 +78,13 @@ jobs:
         run: |
           echo charm-paths=$(echo '${{ steps.get-charm-info.outputs.charm-platforms }}' | jq -r --arg charm ${{ steps.get-charm-info.outputs.charm-name }} '.[] |= split(":") | .[] |= join("-", .) | map($charm + "_" + . + ".charm") | join(",")') >> $GITHUB_OUTPUT
           echo $charm-paths
+          echo $GITHUB_OUTPUT
 
       - name: Get build path
         run: |
           echo $GITHUB_OUTPUT
           ls -la $GITHUB_WORKSPACE | grep charm
-          echo "${{ github.workspace }}/${{ charm-paths }}"
+          echo "${{ github.workspace }}
   set-env:
     runs-on: ubuntu-22.04
     needs: test
@@ -92,3 +93,4 @@ jobs:
         run: |
           echo CHARM_PATH=${{ needs.test.outputs.paths }} >> $GITHUB_ENV
           echo $CHARM_PATH
+          echo $GITHUB_OUTPUT
