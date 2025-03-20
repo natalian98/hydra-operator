@@ -82,3 +82,11 @@ jobs:
         run: |
           echo $GITHUB_OUTPUT
           ls -la $GITHUB_WORKSPACE | grep charm
+  set-env:
+    runs-on: ubuntu-22.04
+    needs: test
+    steps:
+      - name: Set CHARM_PATH envvar
+        run: |
+          echo "CHARM_PATH=${{ needs.test.outputs.charm-paths }}" >> $GITHUB_ENV
+          echo $CHARM_PATH
