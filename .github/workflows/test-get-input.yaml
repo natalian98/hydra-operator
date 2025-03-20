@@ -84,7 +84,7 @@ jobs:
         run: |
           echo $GITHUB_OUTPUT
           ls -la $GITHUB_WORKSPACE | grep charm
-          echo "${{ github.workspace }}
+          echo ${{ github.workspace }}
   set-env:
     runs-on: ubuntu-22.04
     needs: test
