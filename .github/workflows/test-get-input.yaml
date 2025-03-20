@@ -93,4 +93,7 @@ jobs:
         run: |
           echo CHARM_PATH=${{ needs.test.outputs.paths }} >> $GITHUB_ENV
           echo $CHARM_PATH
+          echo $GITHUB_ENV
+
+          echo CHARM_PATH=${{ needs.test.outputs.paths }} >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
