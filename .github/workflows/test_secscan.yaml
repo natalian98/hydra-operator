@@ -1,0 +1,27 @@
+name: Test Secscan Verification
+on: workflow_dispatch
+
+jobs:
+  #  Create a dummy artifact so the reusable workflow has something to scan
+  prep-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create dummy file
+        run: echo "dummy content" > test-artifact.charm
+      - name: Upload dummy
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-key
+          path: test-artifact.charm
+
+  call-secscan:
+    needs: prep-test
+    uses: canonical/identity-team/.github/workflows/_secscan.yaml@fix-secscan
+    with:
+      artifacts-type: "package"
+      artifacts-format: "charm"
+      artifacts-key: "test-key"
+      artifact-paths: "test-artifact.charm"
+    permissions:
+      contents: read
+      issues: write
